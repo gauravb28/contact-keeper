@@ -31,8 +31,13 @@ const AuthState = (props) => {
       setAuthToken(localStorage.getItem('token'));
     }
 
+    const url =
+      process.env.NODE_ENV === 'production'
+        ? `https://contact-keeper-cloud.herokuapp.com/api/auth`
+        : 'http://localhost:5000/api/auth';
+
     try {
-      const res = await axios.get('/api/auth');
+      const res = await axios.get(url);
       dispatch({
         type: USER_LOADED,
         payload: res.data,
@@ -50,8 +55,13 @@ const AuthState = (props) => {
       },
     };
 
+    const url =
+      process.env.NODE_ENV === 'production'
+        ? `https://contact-keeper-cloud.herokuapp.com/api/users`
+        : 'http://localhost:5000/api/users';
+
     try {
-      const res = await axios.post('/api/users', formData, config);
+      const res = await axios.post(url, formData, config);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
@@ -73,8 +83,13 @@ const AuthState = (props) => {
       },
     };
 
+    const url =
+      process.env.NODE_ENV === 'production'
+        ? `https://contact-keeper-cloud.herokuapp.com/api/auth`
+        : 'http://localhost:5000/api/auth';
+
     try {
-      const res = await axios.post('/api/auth', formData, config);
+      const res = await axios.post(url, formData, config);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,

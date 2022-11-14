@@ -28,8 +28,13 @@ const ContactState = (props) => {
 
   // Get Contacts
   const getContacts = async () => {
+    const url =
+      process.env.NODE_ENV === 'production'
+        ? `https://contact-keeper-cloud.herokuapp.com/api/contacts`
+        : 'http://localhost:5000/api/contacts';
+
     try {
-      const res = await axios.get('/api/contacts');
+      const res = await axios.get(url);
       dispatch({ type: GET_CONTACTS, payload: res.data });
     } catch (err) {
       dispatch({ type: CONTACT_ERROR, payload: err.response.msg });
@@ -44,8 +49,13 @@ const ContactState = (props) => {
       },
     };
 
+    const url =
+      process.env.NODE_ENV === 'production'
+        ? `https://contact-keeper-cloud.herokuapp.com/api/contacts`
+        : 'http://localhost:5000/api/contacts';
+
     try {
-      const res = await axios.post('/api/contacts', contact, config);
+      const res = await axios.post(url, contact, config);
       dispatch({ type: ADD_CONTACT, payload: res.data });
     } catch (err) {
       dispatch({ type: CONTACT_ERROR, payload: err.response.msg });
@@ -60,12 +70,13 @@ const ContactState = (props) => {
       },
     };
 
+    const url =
+      process.env.NODE_ENV === 'production'
+        ? `https://contact-keeper-cloud.herokuapp.com/api/contacts`
+        : 'http://localhost:5000/api/contacts';
+
     try {
-      const res = await axios.put(
-        `/api/contacts/${contact._id}`,
-        contact,
-        config
-      );
+      const res = await axios.put(`${url}/${contact._id}`, contact, config);
       dispatch({ type: UPDATE_CONTACT, payload: res.data });
     } catch (err) {
       dispatch({ type: CONTACT_ERROR, payload: err.response.msg });
@@ -74,8 +85,13 @@ const ContactState = (props) => {
 
   // Delete Contact
   const deleteContact = async (id) => {
+    const url =
+      process.env.NODE_ENV === 'production'
+        ? `https://contact-keeper-cloud.herokuapp.com/api/contacts`
+        : 'http://localhost:5000/api/contacts';
+
     try {
-      await axios.delete(`/api/contacts/${id}`);
+      await axios.delete(`${url}/${id}`);
       dispatch({ type: DELETE_CONTACT, payload: id });
     } catch (err) {
       dispatch({ type: CONTACT_ERROR, payload: err.response.msg });
